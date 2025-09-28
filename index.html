@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+  <title>I Love You Gitaa</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100vh;
+      background: #ffe6f2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+    }
+
+    img {
+      max-width: 200px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    #loveBtn {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+      background: #ff4d6d;
+      padding: 15px 30px;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: background 0.2s;
+    }
+    #loveBtn:active {
+      background: #ff2e54; /* gak ngecil lagi */
+    }
+
+    .emoji {
+      position: absolute;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: float 3s linear forwards;
+    }
+
+    @keyframes float {
+      from {
+        transform: translate(var(--xStart), var(--yStart));
+        opacity: 1;
+      }
+      to {
+        transform: translate(var(--xEnd), var(--yEnd));
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Foto -->
+  <img src="gitaa.jpg" alt="Foto Gitaa">
+
+  <!-- Tombol -->
+  <div id="loveBtn">❤️ I Love Youu Gitaa ❤️</div>
+
+  <!-- Suara -->
+  <audio id="loveSound" src="iloveyou.mp3" preload="auto"></audio>
+
+  <script>
+    const loveBtn = document.getElementById("loveBtn");
+    const loveSound = document.getElementById("loveSound");
+    const emojis = ["❤️", "🌸", "💮", "💖", "🌹"];
+
+    loveBtn.addEventListener("click", () => {
+      // play sound
+      loveSound.currentTime = 0;
+      loveSound.play();
+
+      // buat beberapa emoji random
+      for (let i = 0; i < 5; i++) {
+        const emoji = document.createElement("div");
+        emoji.className = "emoji";
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        document.body.appendChild(emoji);
+
+        // dari samping kiri / kanan
+        const side = Math.random() > 0.5 ? window.innerWidth + 50 : -50;
+        const yStart = Math.random() * window.innerHeight;
+        const xEnd = (Math.random() - 0.5) * window.innerWidth;
+        const yEnd = (Math.random() - 0.5) * window.innerHeight;
+
+        emoji.style.setProperty("--xStart", side + "px");
+        emoji.style.setProperty("--yStart", yStart + "px");
+        emoji.style.setProperty("--xEnd", xEnd + "px");
+        emoji.style.setProperty("--yEnd", yEnd + "px");
+
+        setTimeout(() => emoji.remove(), 3000);
+      }
+    });
+  </script>
+</body>
+</html>
